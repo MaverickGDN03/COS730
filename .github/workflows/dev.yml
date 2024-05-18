@@ -16,9 +16,9 @@ jobs:
       postgres:
         image: postgres:12
         env:
-          POSTGRES_DB: mydatabase
-          POSTGRES_USER: myusername
-          POSTGRES_PASSWORD: mypassword
+          POSTGRES_DB: google_wave
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: Meow
         ports:
           - 5432:5432
         options: >-

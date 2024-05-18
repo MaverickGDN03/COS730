@@ -39,7 +39,7 @@ jobs:
           pip install -r requirements.txt
       - name: Run tests
         env:
-          DATABASE_URL: postgres://myusername:mypassword@localhost:5432/mydatabase
+          DATABASE_URL: postgres://postgres:Meow@localhost:5432/google_wave
         run: |
           python manage.py test
   frontend-tests:
@@ -53,7 +53,7 @@ jobs:
           node-version: "12.x"
       - name: Install dependencies
         run: |
-          cd myfrontend  # Change directory to your frontend directory
+          cd app  
           npm install
       - name: Run tests
         run: |

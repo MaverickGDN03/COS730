@@ -1,4 +1,3 @@
-// src/app/services/sentiment.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -11,7 +10,7 @@ export class SentimentService {
 
   constructor(private http: HttpClient) {}
 
-  analyzeSentiment(content: string): Observable<any> {
-    return this.http.post(this.apiUrl, { content });
+  analyzeSentiment(document: any): Observable<any> {
+    return this.http.post(this.apiUrl, document);
   }
 }

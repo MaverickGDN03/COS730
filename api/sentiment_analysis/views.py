@@ -1,9 +1,8 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework import status
 from textblob import TextBlob
-from .models import Document
-from .serializers import DocumentSerializer
+from .models import Document, Paragraph
+from .serializers import DocumentSerializer, ParagraphSerializer
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
@@ -11,13 +10,21 @@ class DocumentViewSet(viewsets.ModelViewSet):
     serializer_class = DocumentSerializer
 
     def create(self, request, *args, **kwargs):
-        content = request.data.get("content", "")
-        blob = TextBlob(content)
-        sentiment = (
-            "positive"
-            if blob.sentiment.polarity > 0
-            else "negative" if blob.sentiment.polarity < 0 else "neutral"
-        )
-        document = Document.objects.create(content=content, sentiment=sentiment)
+        paragraphs_data = request.data.get("paragraphs", [])
+        paragraphs = []
+        for para_data in paragraphs_data:
+            content = para_data.get("content", "")
+            blob = TextBlob(content)
+            sentiment = (
+                "positive"
+                if blob.sentiment.polarity > 0
+                else "negative" if blob.sentiment.polarity < 0 else "neutral"
+            )
+            paragraph = Paragraph(content=content, sentiment=sentiment)
+            paragraph.save()
+            paragraphs.append(paragraph)
+        document = Document(title=request.data.get("title", ""))
+        document.save()
+        document.paragraphs.set(paragraphs)
         serializer = self.get_serializer(document)
         return Response(serializer.data, status=status.HTTP_201_CREATED)

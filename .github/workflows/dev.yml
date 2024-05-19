@@ -59,4 +59,4 @@ jobs:
       - name: Run tests
         run: |
           cd app
-          ng test --browsers ChromeHeadless
+          npm test-git

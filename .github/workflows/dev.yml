@@ -4,9 +4,14 @@ on:
   push:
     branches:
       - develop
+      - main
   pull_request:
     branches:
       - develop
+      - main
+  pull_request:
+    branches:
+      - dev
 
 jobs:
   backend-tests:
@@ -60,3 +65,4 @@ jobs:
         run: |
           cd app
           npm run test-git
+

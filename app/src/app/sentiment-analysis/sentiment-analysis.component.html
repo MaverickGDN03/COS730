@@ -1,0 +1,45 @@
+<div class="document-container">
+  <div class="document-header">
+    <h2>{{ title || "Untitled Document" }}</h2>
+    <div class="form-group">
+      <label for="title">Document Title:</label>
+      <input
+        [(ngModel)]="title"
+        name="title"
+        class="form-control"
+        id="title"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="document-body">
+    <form (submit)="analyzeSentiment()">
+      <div
+        *ngFor="let paragraph of paragraphs; let i = index"
+        class="form-group paragraph"
+      >
+        <label for="content-{{ i }}">Paragraph {{ i + 1 }}:</label>
+        <textarea
+          [(ngModel)]="paragraph.content"
+          name="content-{{ i }}"
+          class="form-control"
+          id="content-{{ i }}"
+          rows="5"
+          required
+        ></textarea>
+        <div
+          *ngIf="paragraph.sentiment"
+          class="sentiment"
+          [ngClass]="getSentimentClass(paragraph.sentiment)"
+        >
+          <h3>Sentiment: {{ paragraph.sentiment }}</h3>
+        </div>
+      </div>
+      <button type="button" class="btn btn-secondary" (click)="addParagraph()">
+        Add Paragraph
+      </button>
+      <button type="submit" class="btn btn-primary">Analyze</button>
+    </form>
+  </div>
+</div>

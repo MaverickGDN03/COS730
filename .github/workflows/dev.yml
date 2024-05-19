@@ -59,4 +59,4 @@ jobs:
       - name: Run tests
         run: |
           cd app
-          npm test-git
+          npm run test-git
